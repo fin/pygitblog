@@ -15,7 +15,8 @@ OUTPATH='generated'
 POSTPATH='posts'
 TPLPATH='templates'
 STATICPATH='static'
-POST_PATTERN=r'(?P<Y>....)-(?P<m>..)-(?P<d>..)-(?P<_>.*)$'
+POST_PARSE_PATTERN=r'(?P<Y>....)-(?P<m>..)-(?P<d>..)-(?P<_>.*)$'
+POST_GENERATE_PATTERN=r'%Y-%m-%d-%_'
 
 env = Environment(loader=FileSystemLoader(TPLPATH))
 env.filters['markdown']=markdown2.markdown
@@ -60,7 +61,7 @@ class Post(FinObj):
 
     def __init__(self,filename):
         self.filename = filename
-        self.values = re.match(POST_PATTERN, filename).groupdict()
+        self.values = re.match(POST_PARSE_PATTERN, filename).groupdict()
 
     @property
     def url(self):
@@ -192,7 +193,7 @@ def post(settings):
     try:
         open('post-wip.txt')
     except:
-        shutil.copy('raw/templates/default_post', 'post-wip.txt')
+        shutil.copy('templates/default_post', 'post-wip.txt')
     x = os.system('vim post-wip.txt')
     print x
     try:
@@ -204,8 +205,8 @@ def post(settings):
     if raw_input()=='y':
         title = slugify(open('post-wip.txt').readline().strip())
         now = datetime.datetime.now()
-        filename = now.strftime(POST_PATTERN.replace('%_', title))
-        shutil.copy('post-wip.txt', 'posts/%s' % filename)
+        filename = now.strftime(POST_GENERATE_PATTERN.replace('%_', title))
+        shutil.move('post-wip.txt', 'posts/%s' % filename)
         git.Repo('.').git.add('posts/%s' % filename)
     else:
         print 'you can continue next time then!'
