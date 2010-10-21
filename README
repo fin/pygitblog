@@ -56,11 +56,12 @@ how do i use it?
 on your local machine:
 * write posts by
   > python b.py post
+  (will be auto-added when done)
 * publish by git push
 
 on the server:
 * refresh the blog / publish by
-  > python b.py redeploy
+  > python b.py generate
 
 why two git repos?
 ------------------
