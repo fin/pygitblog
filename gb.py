@@ -24,7 +24,7 @@ if __name__=='__main__':
         subtitle = args[2] if len(args)>2 else 'default subtitle'
         baseurl = args[3] if len(args)>3 else 'http://example.com/blog/'
 
-        if len(args)<5:
+        if len(args)<4:
             print 'settings the base url to example.com/blog - please edit the settings file before going live for the feed template to work!'
 
         dirname = lib.generate.slugify(blogtitle)

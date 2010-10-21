@@ -79,3 +79,10 @@ customization
 ./raw/ has the base files that get copied to the ./actual repo on init
 
 
+installation
+------------
+
+required libraries:
+gitpython
+markdown2
+jinja2
