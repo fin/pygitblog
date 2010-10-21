@@ -51,6 +51,9 @@ cd ../
 python b.py generate
 echo `pwd`
             """)
+
+        open(os.path.join(dirname, '.gitignore'), 'w').write('*.pyc')
+
         r = git.Repo(os.path.abspath(dirname))
         r.git.add('*')
         r.git.commit('-a','-m lol')
