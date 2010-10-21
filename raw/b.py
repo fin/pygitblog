@@ -2,11 +2,6 @@ import settings
 import sys
 
 
-import os
-DIR = os.path.dirname(os.path.realpath(__file__))
-
-sys.path.append(os.path.realpath(os.path.join(DIR, '..')))
-
 import lib.generate
 
 if __name__=='__main__':

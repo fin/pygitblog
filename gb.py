@@ -34,6 +34,7 @@ if __name__=='__main__':
             sys.exit(-1)
 
         shutil.copytree('raw', dirname)
+        shutil.copytree('lib', os.path.join(dirname, 'lib'))
 
         settingsfile = os.path.join(dirname, 'settings.py')
 

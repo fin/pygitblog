@@ -187,7 +187,12 @@ def generate(settings):
             g = tuple(g)
             write_create_parents(index_tpl.expand_filename(g[0]), index_tpl.tpl.render(posts=g))
 
-    shutil.copytree(STATICPATH, OUTPATH)
+    try:
+        shutil.rmtree(os.path.join(OUTPATH, 'static'))
+    except Exception, e:
+        if e.errno!=2: # no such file or directory
+            raise e
+    shutil.copytree(STATICPATH, os.path.join(OUTPATH, 'static'))
 
 def post(settings):
     try:
