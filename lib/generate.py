@@ -3,7 +3,7 @@ import os.path
 import re
 import itertools
 import codecs
-
+import shutil
 import sys
 
 from jinja2 import Environment, FileSystemLoader
@@ -185,7 +185,7 @@ def generate(settings):
             g = tuple(g)
             write_create_parents(index_tpl.expand_filename(g[0]), index_tpl.tpl.render(posts=g))
 
-    os.copytree(STATICPATH, OUTPATH)
+    shutil.copytree(STATICPATH, OUTPATH)
 
 if __name__=='__main__':
     generate({'BASE_URL': 'test', 'TITLE': 'test', 'SUBTITLE': 'test'})
