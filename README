@@ -1,0 +1,80 @@
+pygitblog
+---------
+
+is a pretty obvious name.
+
+is a static blog generator.
+
+what does that mean?
+
+features:
+* fast
+* servable by any webserver ever. srsly.
+* multiple index pages (included: year, month, day)
+* pretty urls (like /2010/01/01/my_first_post/)
+* commandline interface
+* git-backed deployment
+* markdown syntax
+* rss feed template included
+* no search though. use google.
+
+what would anyone want more?
+
+oh yes.
+
+not featured:
+* comments
+* anything interactive
+* anything interactive at all
+
+why?
+
+because it generates static files.
+
+why pygitblog and not $other_git-backed_system?
+-----------------------------------------------
+
+other git-backed system either do it wrong (don't generate static files but use git as database) or wrong (no ability to do y/m/d/title style urls)
+
+
+why pygitblog and not $other_non-git-backed_system?
+---------------------------------------------------
+
+no clue. why are you reading this?
+
+
+how do i use it?
+----------------
+
+* ssh to wherever you want to host your blog.
+* clone this repository.
+* > python gb.py init
+* there will be a new git repo in ./actual
+* serve actual/generated/ using your webserver
+* clone ./actual to whatever machine
+
+on your local machine:
+* write posts by
+  > python b.py post
+* publish by git push
+
+on the server:
+* refresh the blog / publish by
+  > python b.py redeploy
+
+why two git repos?
+------------------
+
+separation of code and data.
+
+
+customization
+-------------
+
+./actual/templates/ has the post template(s)
+./actual/templates/index has the post template(s)
+./actual/templates/index also has css and rss templates (could be static, but who cares)
+
+./raw/ has the base files that get copied to the ./actual repo on init
+
+

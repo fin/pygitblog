@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+    <title>{{settings.TITLE}}</title>
+    <description>{{settings.SUBTITLE}}</description>
+    <link>http://{{settings.BASE_URL}}/feeds/rss.rss</link>
+    <lastBuildDate>{{now}}</lastBuildDate>
+    <pubDate>{{now}}</pubDate>
+
+    {% for post in posts %}
+    <item>
+        <title>{{post.title|e}}</title>
+        <description>{{post.content|markdown|e}}</description>
+        <link>{{post.url}}</link>
+        <guid>http://{{settings.base_url}}/{{post.url}}</guid>
+        <pubDate>{{post.date}}</pubDate>
+    </item>
+    {% endfor %}
+</channel>
+</rss>
+
