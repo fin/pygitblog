@@ -63,10 +63,11 @@ on the server:
 * refresh the blog / publish by
   > python b.py generate
 
+
 why two git repos?
 ------------------
 
-separation of code and data.
+it sounded like a good idea at the time.
 
 
 customization
