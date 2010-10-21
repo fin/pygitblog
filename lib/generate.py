@@ -108,9 +108,9 @@ class Template(FinObj):
     def expand_url(self, post):
         fn = self.expand(post)
         try:
-            fn = fn.substr(0,fn.index('$'))
-        except:
-            pass
+            fn = fn[0:fn.index('$')]
+        except Exception, e:
+            print e
         return fn
 
     def expand_filename(self, post):
