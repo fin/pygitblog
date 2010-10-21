@@ -3,10 +3,9 @@ import sys
 
 
 import os
-import django
 DIR = os.path.dirname(os.path.realpath(__file__))
 
-sys.path.append(os.path.dirname(os.path.join(DIR, '..')))
+sys.path.append(os.path.realpath(os.path.join(DIR, '..')))
 
 import lib.generate
 

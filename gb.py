@@ -4,6 +4,8 @@ import shutil
 import os
 import jinja2
 import codecs
+import git
+import stat
 
 from optparse import OptionParser
 
@@ -27,6 +29,10 @@ if __name__=='__main__':
 
         dirname = lib.generate.slugify(blogtitle)
 
+        if not os.path.abspath(os.path.dirname(__file__)) in os.path.abspath(dirname):
+            print 'escape attempt!'
+            sys.exit(-1)
+
         shutil.copytree('raw', dirname)
 
         settingsfile = os.path.join(dirname, 'settings.py')
@@ -35,3 +41,19 @@ if __name__=='__main__':
         settings = jinja2.Template(settings).render(title=blogtitle, subtitle=subtitle, base_url=baseurl)
         codecs.open(settingsfile, 'w', 'utf-8').write(settings)
 
+        git.Repo.init(os.path.abspath(dirname))
+
+        hookfile = os.path.join(dirname, '.git/hooks/post-receive')
+    
+        open(hookfile,'w').write("""#!/bin/bash
+GIT_DIR=$(pwd)
+cd ../
+python b.py generate
+echo `pwd`
+            """)
+        r = git.Repo(os.path.abspath(dirname))
+        r.git.add('*')
+        r.git.commit('-a','-m lol')
+        r.git.config('receive.denyCurrentBranch', 'ignore')
+
+        os.chmod(hookfile, os.stat(hookfile).st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
