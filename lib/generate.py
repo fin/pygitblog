@@ -5,6 +5,7 @@ import itertools
 import codecs
 import shutil
 import sys
+import git
 
 from jinja2 import Environment, FileSystemLoader
 import markdown2
@@ -187,5 +188,27 @@ def generate(settings):
 
     shutil.copytree(STATICPATH, OUTPATH)
 
+def post(settings):
+    try:
+        open('post-wip.txt')
+    except:
+        shutil.copy('raw/templates/default_post', 'post-wip.txt')
+    x = os.system('vim post-wip.txt')
+    print x
+    try:
+        open('post-wip.txt')
+    except:
+        print 'post is gone!'
+        return
+    print 'is your post done? y/n'
+    if raw_input()=='y':
+        title = slugify(open('post-wip.txt').readline().strip())
+        now = datetime.datetime.now()
+        filename = now.strftime(POST_PATTERN.replace('%_', title))
+        shutil.copy('post-wip.txt', 'posts/%s' % filename)
+        git.Repo('.').git.add('posts/%s' % filename)
+    else:
+        print 'you can continue next time then!'
+    
 if __name__=='__main__':
     generate({'BASE_URL': 'test', 'TITLE': 'test', 'SUBTITLE': 'test'})
