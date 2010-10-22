@@ -3,7 +3,7 @@
 <channel>
     <title>{{settings.TITLE}}</title>
     <description>{{settings.SUBTITLE}}</description>
-    <link>http://{{settings.BASE_URL}}/feeds/rss.rss</link>
+    <link>{{settings.BASE_URL}}</link>
     <lastBuildDate>{{now}}</lastBuildDate>
     <pubDate>{{now}}</pubDate>
 
@@ -11,8 +11,8 @@
     <item>
         <title>{{post.title|e}}</title>
         <description>{{post.content|markdown|e}}</description>
-        <link>{{post.url}}</link>
-        <guid>http://{{settings.base_url}}/{{post.url}}</guid>
+        <link>{{settings.BASE_URL}}{{post.url}}</link>
+        <guid>http://{{settings.BASE_URL}}{{post.url}}</guid>
         <pubDate>{{post.date}}</pubDate>
     </item>
     {% endfor %}

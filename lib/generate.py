@@ -109,6 +109,8 @@ class Template(FinObj):
         fn = self.expand(post)
         try:
             fn = fn[0:fn.index('$')]
+            if fn.startswith('.'):
+                fn = fn[1:]
         except Exception, e:
             print e
         return fn
@@ -160,6 +162,7 @@ def generate(settings):
 
 
     for x in Template.get_in('./posts'):
+        x.filename = x.filename.replace('./posts', '.')
         post_tpls.append(x)
     for x in Template.get_in('./indexes'):
         x.filename = x.filename.replace('./indexes', '.')
@@ -187,12 +190,13 @@ def generate(settings):
             g = tuple(g)
             write_create_parents(index_tpl.expand_filename(g[0]), index_tpl.tpl.render(posts=g))
 
-    try:
-        shutil.rmtree(os.path.join(OUTPATH, 'static'))
-    except Exception, e:
-        if e.errno!=2: # no such file or directory
-            raise e
-    shutil.copytree(STATICPATH, os.path.join(OUTPATH, 'static'))
+    for f in os.listdir(STATICPATH):
+        try:
+            shutil.rmtree(os.path.join(OUTPATH, f))
+        except Exception, e:
+            if e.errno!=2: # no such file or directory
+                raise e
+        shutil.copytree(os.path.join(STATICPATH, f), os.path.join(OUTPATH, f))
 
 def post(settings):
     try:
