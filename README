@@ -18,18 +18,16 @@ features:
 * rss feed template included
 * no search though. use google.
 
+
 what would anyone want more?
 
-oh yes.
-
+oh yes. the downsides.
 not featured:
 * comments
 * anything interactive
 * anything interactive at all
 
-why?
-
-because it generates static files.
+why? because it generates static files.
 
 why pygitblog and not $other_git-backed_system?
 -----------------------------------------------
@@ -48,20 +46,23 @@ how do i use it?
 
 * ssh to wherever you want to host your blog.
 * clone this repository.
-* > python gb.py init
-* there will be a new git repo in ./actual
-* serve actual/generated/ using your webserver
-* clone ./actual to whatever machine
+* > python gb.py init "Blog Title" "Blog Subtitle" "http://example.com/blog"
+* there will be a new git repo in ./blog_title
+* serve blog_title/generated/ using your webserver
+* git clone ./blog_title to whatever machine
 
 on your local machine:
 * write posts by
   > python b.py post
   (will be auto-added when done)
+* test by
+  > python b.py test
 * publish by git push
 
 on the server:
 * refresh the blog / publish by
   > python b.py generate
+  (should never be neccessary though)
 
 
 why two git repos?
@@ -73,17 +74,17 @@ it sounded like a good idea at the time.
 customization
 -------------
 
-./actual/templates/ has the post template(s)
-./actual/templates/index has the post template(s)
-./actual/templates/index also has css and rss templates (could be static, but who cares)
-
-./raw/ has the base files that get copied to the ./actual repo on init
-
+./templates/posts/ has the post template(s)
+./templates/indexes has the index template(s)
+./templates/indexes also has the rss feed template
+./static/design has a very basic css file
+./templates/default_post is the empty post file you get when doing > python b.py post
 
 installation
 ------------
 
 required libraries:
-gitpython
-markdown2
-jinja2
+* gitpython
+* markdown2
+* jinja2
+
